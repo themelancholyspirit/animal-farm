@@ -24,15 +24,9 @@ git clone https://github.com/themelancholyspirit/animal-farm.git
 cd animal-farm
 ```
 
-2. Create a data directory for the SQLite database:
+2. Build and start the containers:
 ```bash
-mkdir -p data
-chmod 777 data
-```
-
-3. Build and start the containers:
-```bash
-docker-compose up --build
+docker-compose up
 ```
 
 The application will be available at:
@@ -53,26 +47,8 @@ animal-farm/
 ├── data/                     # SQLite database storage
 ├── docker-compose.yml        # Docker Compose configuration
 └── README.md                 # This file
+
 ```
-
-## 🛠️ Development
-
-To run the applications in development mode:
-
-1. Frontend (Angular):
-```bash
-cd animal-farm-frontend
-npm install
-npm start
-```
-
-2. Backend (NestJS):
-```bash
-cd animal-farm-backend
-npm install
-npm run start:dev
-```
-
 ## 📝 Environment Variables
 
 The application uses the following environment variables:
@@ -82,30 +58,6 @@ Backend:
 
 Frontend:
 - Environment configuration is handled through Angular's environment files
-
-## 🐳 Docker Commands
-
-Useful Docker commands for managing the application:
-
-```bash
-# Build and start containers
-docker-compose up --build
-
-# Start containers in detached mode
-docker-compose up -d
-
-# Stop containers
-docker-compose down
-
-# View logs
-docker-compose logs -f
-
-# Remove all containers and volumes
-docker-compose down -v
-
-# Clean up Docker system
-docker system prune -af
-```
 
 ## 🔒 Security
 
