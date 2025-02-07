@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./animal-farm-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - animal-farm-network
+
+  backend:
+    build:
+      context: ./animal-farm-backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./data:/app/data
+    networks:
+      - animal-farm-network
+
+networks:
+  animal-farm-network:
+    driver: bridge

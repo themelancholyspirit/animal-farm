@@ -1,0 +1,99 @@
+<div class="farm-background">
+    <header class="farm-header">
+        <h1 [@titleAnimation]>Animal Farm</h1>
+        <p class="subtitle" [@subtitleAnimation]>"All animals are equal, but some animals are more equal than others."</p>
+    </header>
+
+    <div class="content-wrapper">
+        <section class="main-pig-section" [@fadeIn]>
+            <div class="pig-container" [class.evil-mode]="isPutinMode">
+                <div class="pig-frame" (click)="togglePigImage()" [matTooltip]="isPutinMode ? 'Return to Farm' : 'Discover Truth'">
+                    <div class="image-overlay"></div>
+                    <img [src]="currentPigImage" 
+                         [class.rotate]="isRotating" 
+                         [alt]="getPigAltText()"
+                         class="pig-image">
+                </div>
+                
+                <div class="controls-wrapper">
+                    <button 
+                        mat-fab
+                        [color]="isPutinMode ? 'warn' : 'primary'"
+                        (click)="toggleMusic($event)"
+                        [class.pulse]="isMusicPlaying"
+                        class="music-button">
+                        <mat-icon>{{ isMusicPlaying ? 'volume_up' : 'volume_off' }}</mat-icon>
+                    </button>
+                </div>
+
+                <div class="message-container" [@messageAnimation]="showMessage">
+                    <p class="pig-message" *ngIf="showMessage">{{ currentMessage }}</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="animals-section" [@staggerAnimation]="(animals$ | async)?.length">
+            <div class="animals-grid">
+                <mat-card *ngFor="let animal of animals$ | async; let i = index" 
+                          class="animal-card" 
+                          [class.fed]="animal.thanksCount > 0"
+                          [@cardAnimation]="i">
+                  
+                    <div class="card-image-wrapper">
+                        <div class="image-overlay"></div>
+                        <img [src]="animal.imageUrl" [alt]="animal.name" class="animal-image">
+                        
+                        <!-- Disgust Counter -->
+                        <div class="counter disgust-counter" *ngIf="animal.disgustCount > 0">
+                            <span class="counter-number">{{animal.disgustCount}}</span>
+                            <span class="counter-label">Disgust</span>
+                        </div>
+                        
+                        <!-- Thanks Counter -->
+                        <div class="counter thanks-counter" *ngIf="animal.thanksCount > 0">
+                            <span class="counter-number">{{animal.thanksCount}}</span>
+                            <span class="counter-label">Thanks</span>
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <h2 class="animal-name">{{ animal.name }}</h2>
+                        <p class="animal-species">{{ animal.species }}</p>
+                        
+                        <!-- Add message container here -->
+                        <div class="message-container" [@messageAnimation]="animalShowMessage.get(animal.id)">
+                            <p class="animal-message" *ngIf="animalShowMessage.get(animal.id)">
+                                {{ animalMessages.get(animal.id) }}
+                            </p>
+                        </div>
+
+                        <blockquote class="animal-quote">
+                            "{{ getAnimalQuote(animal) }}"
+                        </blockquote>
+
+                        <button 
+                            mat-raised-button 
+                            [color]="isPutinMode ? 'warn' : 'primary'"
+                            [matMenuTriggerFor]="foodMenu"
+                            class="feed-button"
+                            [class.fed-button]="animal.thanksCount > 0">
+                            <mat-icon>restaurant</mat-icon>
+                            <span>Feed {{ animal.name }}</span>
+                        </button>
+
+                        <mat-menu #foodMenu="matMenu" class="food-menu">
+                            <button 
+                                mat-menu-item 
+                                *ngFor="let food of foodOptions"
+                                (click)="feedAnimal(animal, food)"
+                                class="food-option">
+                                <mat-icon>{{ food.icon }}</mat-icon>
+                                <span>{{ food.name }}</span>
+                            </button>
+                        </mat-menu>
+                    </div>
+                </mat-card>
+            </div>
+        </section>
+    </div>
+</div> 
