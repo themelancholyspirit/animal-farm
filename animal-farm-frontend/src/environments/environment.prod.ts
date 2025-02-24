@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: '/api'
+  apiUrl: '/api'  // This will be handled by nginx ingress in k8s
 }; 
