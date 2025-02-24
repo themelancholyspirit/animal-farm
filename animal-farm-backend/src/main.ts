@@ -6,11 +6,16 @@ async function bootstrap() {
   
   // Enable CORS
   app.enableCors({
-    origin: true, // or specify origins like ['http://localhost:4200']
+    origin: '*',  // Allow all origins for now
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true,
+    credentials: false,  // Changed to false since we're using '*'
   });
   
-  await app.listen(process.env.PORT ?? 3000);
+  // Add global prefix
+  app.setGlobalPrefix('api');
+  
+  // Listen on all network interfaces
+  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
 }
+
 bootstrap();
