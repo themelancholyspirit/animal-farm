@@ -1,7 +1,7 @@
 import { Controller, Post, Get } from '@nestjs/common';
 import { MusicService } from './music.service';
 
-@Controller('api/music')
+@Controller('music')
 export class MusicController {
   constructor(private readonly musicService: MusicService) {}
 

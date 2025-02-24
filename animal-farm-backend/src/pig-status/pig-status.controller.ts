@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body } from '@nestjs/common';
 import { PigStatusService } from './pig-status.service';
 import { PigStatus } from '../entities/pig-status.entity';
 
-@Controller('api/bidzina')
+@Controller('bidzina')
 export class PigStatusController {
   constructor(private readonly pigStatusService: PigStatusService) {}
 
